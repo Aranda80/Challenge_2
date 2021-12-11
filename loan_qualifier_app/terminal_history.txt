@@ -1,0 +1,64 @@
+ 1010  mkdir Challenges
+ 1011  ls
+ 1012  cd Challenges
+ 1013  ls
+ 1014  git clone https://github.com/Aranda80/Challenge_2.git
+ 1015  ls
+ 1016  git add Challenge_2
+ 1017  cd challenge_2
+ 1018  ls
+ 1019  ls
+ 1020  git add loan_qualifier_app
+ 1021  git status
+ 1022  git commit "Added the starter code for the loan qualifier app"
+ 1023  git commit -m "Added the starter code for the loan qualifier app"
+ 1024  git push
+ 1025  git status
+ 1026  ls
+ 1027  cd loan_qualifier_app
+ 1028  ls
+ 1029  git status
+ 1030  git add app.py
+ 1031  git status
+ 1032  git add app.py
+ 1033  git status
+ 1034  pwd
+ 1035  cd ..
+ 1036  git add loan_qualifier_app
+ 1037  git status
+ 1038  code .
+ 1039  git status
+ 1040  git add app.py
+ 1041  cd loan_qualifier_app
+ 1042  git add app.py
+ 1043  git status
+ 1044  git add .
+ 1045  git status
+ 1046  git commit -m "modified the app.py file adding the function to create the csv file which will include the qualifying loan information"
+ 1047  git status
+ 1048  git push
+ 1049  git add .
+ 1050  git status
+ 1051  git commit -m "modified the app.py file. Modified the csv file function to write the qualifying loan data in it."
+ 1052  git status
+ 1053  git push
+ 1054  ls
+ 1055  pwd
+ 1056  ls
+ 1057  git status
+ 1058  git add .
+ 1059  git status
+ 1060  git commit -m "modified save_csv and save_qualifying_loans functionsin app.py, modified README.md and added images"
+ 1061  git status
+ 1062  git push
+ 1063  git status
+ 1064  history 50 > terminal_history.txt
+ 1065  ls
+ 1066  git status
+ 1067  git status
+ 1068  git add .
+ 1069  git status
+ 1070  git commit -m "moved save_csv function in app.py to fileio.py file, modified an image in README.md" 
+ 1071  git status
+ 1072  git push
+ 
