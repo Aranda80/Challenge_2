@@ -11,6 +11,9 @@ import fire
 import questionary
 import csv
 from pathlib import Path
+from questionary import question
+
+from questionary.constants import NO, YES
 
 from qualifier.utils.fileio import load_csv
 
@@ -61,15 +64,29 @@ def get_applicant_info():
 
     return credit_score, debt, income, loan_amount, home_value
 
-# def save_csv():
-#     """Creates a csv file that will hold the qualifying loans information"""
-#     output_path = Path("../loan_qualifier_app/data/qualifying_loans.csv")
-    
-#     with open(output_path, "w") as csvfile:
-#         csvwriter = csv.writer(csvfile)
+
 
 def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_value):
+    """Determine which loans the user qualifies for.
 
+    Loan qualification criteria is based on:
+        - Credit Score
+        - Loan Size
+        - Debit to Income ratio (calculated)
+        - Loan to Value ratio (calculated)
+
+    Args:
+        bank_data (list): A list of bank data.
+        credit_score (int): The applicant's current credit score.
+        debt (float): The applicant's total monthly debt payments.
+        income (float): The applicant's total monthly income.
+        loan (float): The total loan amount applied for.
+        home_value (float): The estimated home value.
+
+    Returns:
+        A list of the banks willing to underwrite the loan.
+
+    """
     # Calculate the monthly debt ratio
     monthly_debt_ratio = calculate_monthly_debt_ratio(debt, income)
     print(f"The monthly debt to income ratio is {monthly_debt_ratio:.02f}")
@@ -85,40 +102,40 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
     bank_data_filtered = filter_debt_to_income(monthly_debt_ratio, bank_data_filtered)
     bank_data_filtered = filter_loan_to_value(loan_to_value_ratio, bank_data_filtered)
 
-    print(f"Found {len(bank_data_filtered)} qualifying loans")
-    
-    
-    
-    header = ["Lender","Max Loan Amount","Max LTV","Max DTI","Min Credit Score","Interest Rate"]
-    
-    output_path = Path("../loan_qualifier_app/data/qualifying_loans.csv")
 
-    with open(output_path, "w") as csvfile:
-        csvwriter = csv.writer(csvfile)
-        csvwriter.writerow(header)
-        csvwriter.writerow(bank_data_filtered)
+    print(f"Found {len(bank_data_filtered)} qualifying loans")
 
     return bank_data_filtered
 
+def save_csv(data,output_path):
+    """Creates a csv file that will hold the qualifying loans information in the path inputted
+    by the user in the save_qualifying_loans function"""
+    
+    header = ["Lender","Max Loan Amount","Max LTV","Max DTI","Min Credit Score","Interest Rate"]
+
+    with open(Path(output_path), "w", newline='') as csvfile:
+         csvwriter = csv.writer(csvfile, delimiter=',')
+         csvwriter.writerow(header)
+         csvwriter.writerows(data)
 
 def save_qualifying_loans(qualifying_loans):
-    """Saves the qualifying loans to a CSV file.
+    """Saves the qualifying loans to a CSV file when the user qualifies for at least 1 loan
+    and if the user decides to save the information in a csv file in the path inputted.
 
     Args:
         qualifying_loans (list of lists): The qualifying bank loans.
     """
-    # @TODO: Complete the usability dialog for savings the CSV Files.
-    # output_path = Path("../loan_qualifier_app/data/qualifying_loans.csv")
-    # bank_data_filtered = filter_max_loan_size()
-    # bank_data_filtered = filter_credit_score()
-    # bank_data_filtered = filter_debt_to_income()
-    # bank_data_filtered = filter_loan_to_value()
     
-    # with open(output_path, "w") as csvfile:
-    #     csvwriter = csv.writer(csvfile, delimiter=",")
-    # for loan_data in bank_data_filtered:
-    #     csvwriter.writerow(loan_data.values())
-    # return loan_data
+    if len(qualifying_loans) >=1:
+        generate_csv = questionary.confirm("Would you like to save the csv with the qualifying loan information?").ask()
+        if generate_csv == True:
+            output_path = questionary.text("Enter the Path where you would like to save the csv file (ie. ../loan_qualifier_app/data/qualifying_loans.csv)?").ask()
+            save_csv(qualifying_loans,output_path)
+            
+        elif generate_csv == False:
+            sys.exit(f"You have chosen not to save the qualifying loan information. We hope to see you back soon!")
+    else:
+        print("Unfortunately, we were unable to find at this time any qualifying loan based on the information provided.")
 
 
 def run():
@@ -134,8 +151,6 @@ def run():
     qualifying_loans = find_qualifying_loans(
         bank_data, credit_score, debt, income, loan_amount, home_value
     )
-    # Create csv file
-    #save_csv()
 
     # Save qualifying loans
     save_qualifying_loans(qualifying_loans)

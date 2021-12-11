@@ -1,33 +1,89 @@
-# Project Title
+![Loan Finder App](images/Loan_finder_app.png)
 
-Just after the title, introduce your project by describing attractively what the project is about and what is the main problem that inspires you to create this project or what is the main contribution for the potential user of your project.
+# Loan Finder Application
+
+This application was created to simplify the search of a new qualifying loans. Loan Finder enables the user to obtain information about loans that they are elegible for, using information from a pool of lenders contained in a csv sheet, and asking the user questions to establish their eligibility for the loans. The result is a list with the qualifying loan details, which they can use to easily compare which one is better and more convinient for them in a matter of seconds.
 
 ---
 
 ## Technologies
 
-Describe the technologies required to use your project such as programming languages, libraries, frameworks, and operating systems. Be sure to include the specific versions of any critical dependencies that you have used in the stable version of your project.
+This application uses python 3.7.11 and the following packages:
+
+* **[fire](https://github.com/google/python-fire)** - For the line interface, and data entry.
+
+* **[questionary](https://github.com/tmbo/questionary)** - For user prompts and dialogs
+
 
 ---
 
 ## Installation Guide
 
-In this section, you should include detailed installation notes containing code blocks and screenshots.
+* Please install the following before using the application:
+
+```python
+  pip install fire
+  pip install questionary
+```
 
 ---
 
 ## Usage
 
-This section should include screenshots, code blocks, or animations explaining how to use your project.
+### *To use the Loan Finder application, you can follow these steps:*
+
+**Step 1:** 
+
+- Clone the repository in GitHub on your local drive. You can find the link here:
+
+![cloning repository link](images/cloning_repository_link.png)
+
+- From your terminal run:
+
+```
+git clone <clone HTTPS link>
+```
+
+
+**Step 2:** Run the **app.py** file:
+
+```python
+python app.py
+```
+
+
+
+- The user will then be asked the following questions to obtain their data:
+
+
+![Loan Qualifier Questions and Results](images/LQ_image.png)
+
+
+
+
+- Lastly, the user will be asked if they want to save the qualifying loan information in a csv file for their analysis:
+
+![Loan Qualifier save CSV](images/CSV_Q_image.png)
+
+
+
 
 ---
 
 ## Contributors
 
-In this section, list all the people who contribute to this project. You might want recruiters or potential collaborators to reach you, so include your contact email and, optionally, your LinkedIn or Twitter profile.
+Jaime Aranda
+
+
+Firas Obeid
+
+
+University of Washington FinTech team
+
+
 
 ---
 
 ## License
 
-When you share a project on a repository, especially a public one, it's important to choose the right license to specify what others can and can't with your source code and files. Use this section to include the license you want to use.
+MIT
