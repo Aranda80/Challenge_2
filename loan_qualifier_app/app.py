@@ -61,28 +61,14 @@ def get_applicant_info():
 
     return credit_score, debt, income, loan_amount, home_value
 
+# def save_csv():
+#     """Creates a csv file that will hold the qualifying loans information"""
+#     output_path = Path("../loan_qualifier_app/data/qualifying_loans.csv")
+    
+#     with open(output_path, "w") as csvfile:
+#         csvwriter = csv.writer(csvfile)
 
 def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_value):
-    """Determine which loans the user qualifies for.
-
-    Loan qualification criteria is based on:
-        - Credit Score
-        - Loan Size
-        - Debit to Income ratio (calculated)
-        - Loan to Value ratio (calculated)
-
-    Args:
-        bank_data (list): A list of bank data.
-        credit_score (int): The applicant's current credit score.
-        debt (float): The applicant's total monthly debt payments.
-        income (float): The applicant's total monthly income.
-        loan (float): The total loan amount applied for.
-        home_value (float): The estimated home value.
-
-    Returns:
-        A list of the banks willing to underwrite the loan.
-
-    """
 
     # Calculate the monthly debt ratio
     monthly_debt_ratio = calculate_monthly_debt_ratio(debt, income)
@@ -92,6 +78,7 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
     loan_to_value_ratio = calculate_loan_to_value_ratio(loan, home_value)
     print(f"The loan to value ratio is {loan_to_value_ratio:.02f}.")
 
+   
     # Run qualification filters
     bank_data_filtered = filter_max_loan_size(loan, bank_data)
     bank_data_filtered = filter_credit_score(credit_score, bank_data_filtered)
@@ -99,19 +86,20 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
     bank_data_filtered = filter_loan_to_value(loan_to_value_ratio, bank_data_filtered)
 
     print(f"Found {len(bank_data_filtered)} qualifying loans")
+    
+    
+    
+    header = ["Lender","Max Loan Amount","Max LTV","Max DTI","Min Credit Score","Interest Rate"]
+    
+    output_path = Path("../loan_qualifier_app/data/qualifying_loans.csv")
+
+    with open(output_path, "w") as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(header)
+        csvwriter.writerow(bank_data_filtered)
 
     return bank_data_filtered
 
-def save_csv():
-    """Creates a csv file that will hold the qualifying loans information"""
-    output_path = Path("../loan_qualifier_app/data/qualifying_loans.csv")
-    qualifying_loans = []
-
-    with open(output_path, "w") as csvfile:
-        csvwriter = csv.writer(csvfile, delimiter=",")
-        for qualifying_loans in qualifying_loans:
-            csvwriter.writerow(qualifying_loans.values())
-    return output_path
 
 def save_qualifying_loans(qualifying_loans):
     """Saves the qualifying loans to a CSV file.
@@ -120,7 +108,17 @@ def save_qualifying_loans(qualifying_loans):
         qualifying_loans (list of lists): The qualifying bank loans.
     """
     # @TODO: Complete the usability dialog for savings the CSV Files.
-    # YOUR CODE HERE!
+    # output_path = Path("../loan_qualifier_app/data/qualifying_loans.csv")
+    # bank_data_filtered = filter_max_loan_size()
+    # bank_data_filtered = filter_credit_score()
+    # bank_data_filtered = filter_debt_to_income()
+    # bank_data_filtered = filter_loan_to_value()
+    
+    # with open(output_path, "w") as csvfile:
+    #     csvwriter = csv.writer(csvfile, delimiter=",")
+    # for loan_data in bank_data_filtered:
+    #     csvwriter.writerow(loan_data.values())
+    # return loan_data
 
 
 def run():
@@ -137,7 +135,7 @@ def run():
         bank_data, credit_score, debt, income, loan_amount, home_value
     )
     # Create csv file
-    save_csv()
+    #save_csv()
 
     # Save qualifying loans
     save_qualifying_loans(qualifying_loans)
