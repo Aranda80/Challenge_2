@@ -63,7 +63,7 @@ python app.py
 
 - Lastly, the user will be asked if they want to save the qualifying loan information in a csv file for their analysis:
 
-![Loan Qualifier save CSV](images/CSV_Q_image.png)
+![Loan Qualifier save CSV](images/saving_option_image.png)
 
 
 
@@ -86,4 +86,4 @@ University of Washington FinTech team
 
 ## License
 
-MIT
+Licensed under the MIT License.
